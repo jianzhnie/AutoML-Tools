@@ -1,13 +1,29 @@
 [TOC]
 
-
 ### Auto-skearn 简介
-Auto-Sklearn 是基于sklearn的一个自动机器学习框架，可支撑分类和回归问题的分析。Auto-Sklearn 的核心思想是组合算法选择和超参数优化(CASH: Combined Algorithm Selection and Hyperparameter optimization)：同时考虑学习算法以及算法的超参选择。Auto-Sklearn的分析步骤如下：在数据导入后，加上一个元学习步骤(meta-learning)；在模型训练后，通过贝叶斯方法更新数据处理和特征选择；最终，在模型训练完成之后，将模型进行组合(build ensemble)以得到最优的估计。
 
+
+Auto-sklearn 提供了开箱即用的监督型自动机器学习。从名字可以看出，Auto-Sklearn主要基于sklearn机器学习库，使用方法也与之类似，这让熟悉sklearn的开发者很容易切换到Auto-Sklearn。Auto-Sklearn 的核心思想是组合算法选择和超参数优化(CASH: Combined Algorithm Selection and Hyperparameter optimization)：同时考虑学习算法以及算法的超参选择。在模型方面，除了sklearn提供的机器学习模型，还加入了xgboost算法支持；在框架整体调优方面，使用了贝叶斯优化。
+
+
+该库由 Matthias Feurer 等人提出，技术细节请查阅论文《Efficient and Robust Machine Learning》。Feurer 在这篇论文中写道：我们提出了一个新的、基于 scikit-learn 的鲁棒 AutoML 系统，其中使用 15 个分类器、14 种特征预处理方法和 4 种数据预处理方法，生成了一个具有 110 个超参数的结构化假设空间。
+
+
+![img](http://image.techweb.com.cn/upload/roll/2020/09/27/202009279365_9585.png)
+
+图源：《Efficient and Robust Automated Machine Learning》
+
+
+auto-sklearn 可能最适合刚接触 AutoML 的用户。除了发现数据集的数据准备和模型选择之外，该库还可以从在类似数据集上表现良好的模型中学习。表现最好的模型聚集在一个集合中。
+
+Auto-Sklearn的分析步骤如下：在数据导入后，加上一个元学习步骤(meta-learning)；在模型训练后，通过贝叶斯方法更新数据处理和特征选择；最终，在模型训练完成之后，将模型进行组合(build ensemble)以得到最优的估计。
+
+
+在高效实现方面，auto-sklearn 需要的用户交互最少。该库可以使用的两个主要类是 AutoSklearnClassifier 和 AutoSklearnRegressor，它们分别用来做分类和回归任务。两者具有相同的用户指定参数，其中最重要的是时间约束和集合大小。
 
 ### Auto-sklearn 能 Auto 到什么地步？
 
-- 常规 ML framework 如下图灰色部分：导入数据-数据清洗-特征工程-分类器-输出预测值
+- 常规 ML framework 如上图灰色部分：导入数据-数据清洗-特征工程-分类器-输出预测值
 - auto部分如下图绿色方框：在ML framework 左边新增 meta-learning，在右边新增 build-ensemble，对于调超参数，用的是贝叶斯优化。
 - 自动学习样本数据: meta-learning，去学习样本数据的模样，自动推荐合适的模型。比如文本数据用什么模型比较好，比如很多的离散数据用什么模型好。
 - 自动调超参：Bayesian optimizer，贝叶斯优化。
@@ -43,7 +59,6 @@ Auto-sklearn是基于sklearn库，因此会有惊艳强大的模型库和数据/
 Auto-Sklearn包含两个主模块：
 - 分类任务(autosklearn.classification.AutoSklearnClassifier(...))
 - 回归任务(autosklearn.regression.AutoSklearnRegressor(...))
-
 
 
 ### Auto-sklearn中的特征预处理
@@ -94,7 +109,6 @@ meta-learning: warmstart the Bayesian optimization procedure
 - 左边：黑色的部分是标准贝叶斯优化流程，红色的是添加meta-learning的贝叶斯优化
 - 右边：有 Metafeatures for the Iris dataset，描述数据长什么样的features，下面的公式是计算数据集与数据集的相似度的，只要发现相似的数据集，就可以根据经验来推荐好用的分类器。再来张大图感受下metafeatures到底长啥样：
 
-
 ### Auto-sklearn 如何实现自动超参数调优？
 
 #### 概念解释
@@ -118,6 +132,9 @@ meta-learning: warmstart the Bayesian optimization procedure
     - 不依赖人为猜测所需的样本量为多少，优化技术基于随机性，概率分布
     - 在目标函数未知且计算复杂度高的情况下极其强大
     - 通常适用于连续值的超参，例如 learning rate, regularization coefficient
+- SMAC
+- TPE
+
 
 在 auto-sklearn 里，一直出现的 bayesian optimizer 就是答案。是利用贝叶斯优化进行自动调参的。
 
@@ -249,3 +266,9 @@ Auto-Sklearn支持切分训练/测试集的方式，也支持使用交叉验证�
 - 计算时长往往一个小时以上
 - 输出携带的信息较少，如果想进一步训练只能重写代码。
 - 在数据清洗这块还需要人为参与，目前对非数值型数据不友好
+
+
+### 一些教程：
+- https://machinelearningmastery.com/auto-sklearn-for-automated-machine-learning-in-python/
+- https://machinelearningmastery.com/what-is-bayesian-optimization/
+
