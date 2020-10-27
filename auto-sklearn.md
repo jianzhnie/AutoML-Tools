@@ -271,4 +271,7 @@ Auto-Sklearn支持切分训练/测试集的方式，也支持使用交叉验证�
 ### 一些教程：
 - https://machinelearningmastery.com/auto-sklearn-for-automated-machine-learning-in-python/
 - https://machinelearningmastery.com/what-is-bayesian-optimization/
-
+- [Efficient and Robust Automated Machine Learning, 2015](https://papers.nips.cc/paper/5872-efficient-and-robust-automated-machine-learning)
+- [Auto-Sklearn Homepage](https://automl.github.io/auto-sklearn/master/)
+- [Auto-Sklearn GitHub Project](https://github.com/automl/auto-sklearn)
+- [Auto-Sklearn Manual](https://automl.github.io/auto-sklearn/master/manual.html)

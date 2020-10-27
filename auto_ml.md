@@ -1,11 +1,12 @@
-# AutoML框架
+[Toc]
+
+## AutoML框架
 
 相对于其他 AutoML工具来说， Auto_ml 是从0->1的开创性的工作，其附加功能很多，比如feature response，data clean，ml analysis，feature learning ，deep learning，Categorical Ensembling（类别组合）等。但是对于auto_ml的核心——model selection，hyper parameter optimation等，它仅仅做的很基础——使用SGCV进行网格搜索，而在不选择model selection时，model是默认给定的（默认GradientBoostingRegressor for regressor &GradientBoostingClassifier for classifier）。
 总之，auto_ml做的很基础很全面，根据阅读源代码熟悉 autoML的Pipeline，适合auto_ml新手进行探索。
 
-[Toc]
+### 特性
 
-## 特性
 使整个机器学习过程自动化，使其非常易于用于分析和获取生产中的实时预测。该项目自动执行：
 
 - Analytics (pass in data, and auto_ml will tell you the relationship of each variable to what it is you’re trying to predict).
@@ -21,15 +22,16 @@
 - Unicorns (you could conceivably train it to predict what is a unicorn and what is not).
 - Hugs (this makes it much easier to do your job, hopefully leaving you more time to hug those those you care about).
 
-## GetStart
+### GetStart
 
-### Installation
+#### Installation
+
 auto_ml模块可直接使用pip命令进行安装，目前版本为auto_ml 2.9.10
 ```python
 pip install auto_ml
 ```
 
-### 第三方软件包
+#### 第三方软件包
 
 - TensorFlow & Keras, XGBoost, LightGBM
 
@@ -39,7 +41,7 @@ auto_ml集成了所有这些很棒的库，包括 DeepLearningClassifier 、 Dee
 ml_predictor.train(data, model_names=['DeepLearningClassifier'])
 ```
 
-### 使用示例
+#### 使用示例
 
     1、导入auto_ml中的包Predictor和get_boston_dataset
     2、通过get_boston_dataset获取训练集和测试集
