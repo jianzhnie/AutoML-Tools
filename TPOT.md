@@ -1,4 +1,4 @@
-## [TPOT](https://github.com/EpistasisLab/tpot)
+## TPOT
 
 [TOC]
 
@@ -20,7 +20,7 @@ TPOT是建立在scikit-learn之上的，因此它生成的所有代码都应该�
 
 
 
-#### AutoML算法可能需要很长时间才能完成搜索
+### AutoML算法可能需要很长时间才能完成搜索
 
 当然，您可以只运行几分钟的TPOT，它将为您的数据集找到一个相当好的Pipeline。但是，如果运行TPOT的时间不够长，它可能无法为您的数据集找到最好的Pipeline。它甚至可能根本找不到任何合适的Pipeline，在这种情况下会出现 RuntimeError（'a pipeline has not been optimized。请先调用fit（））将被引发。通常值得长时间（数小时到几天）并行运行TPOT的多个实例，以允许TPOT彻底搜索您的数据集的Pipeline空间。
 
@@ -31,13 +31,13 @@ AutoML算法并不像在数据集上拟合一个模型那么简单；它们考�
 
 典型的TPOT运行需要几个小时到几天才能完成（除非它是一个小的数据集），但是您总是可以中途中断运行并看到目前为止最好的结果。TPOT还提供了一个warm_start参数，允许您从停止的位置重新启动TPOT运行。
 
-#### AutoML算法可以为同一数据集推荐不同的解决方案
+### AutoML算法可以为同一数据集推荐不同的解决方案
 
 如果您使用的是相当复杂的数据集或运行TPOT很短的时间，那么不同的TPOT运行可能会得到不同的Pipeline建议。TPOT的优化算法本质上是随机的，这意味着它使用随机性（部分）来搜索可能的Pipeline空间。当两个TPOT运行推荐不同的Pipeline时，这意味着由于时间不够，TPOT运行没有收敛，或者多个Pipeline在数据集上执行的结果非常接近。
 
 这实际上是相对于固定网格搜索技术的一个优势：TPOT是一个助手，它为您提供关于如何通过探索您可能从未考虑过的Pipeline配置来解决特定机器学习问题的想法，然后将微调留给更受约束的参数调整技术，如网格搜索。
 
-#### 以IRIS数据集为例，使用TPOT
+### 以IRIS数据集为例，使用TPOT
 
 我们已经注意到将TPOT接口设计成尽可能与scikit learn相似。TPOT可以像任何常规Python模块一样导入。要导入TPOT，请键入：
 
@@ -117,7 +117,7 @@ Best pipeline: KNeighborsClassifier(MLPClassifier(input_matrix, alpha=0.1, learn
 0.9736842105263158
 ```
 
-#### 进化算法和它的参数
+### 进化算法和它的参数
 
 针对TPOT分类器和回归器，我们有一组已提供的参数，样例如下：
 
@@ -148,7 +148,7 @@ class TPOTBase(BaseEstimator):
 
 
 
-#### TPOT 内置的配置文件
+### TPOT 内置的配置文件
 
 TPOT 带有一些默认的运算符和参数配置，我们认为它们可以很好地优化机器学习Pipeline。
 
@@ -278,7 +278,7 @@ classifier_config_dict = {
     },
 }
 ```
-#### 自定义参数配置文件
+### 自定义参数配置文件
 
 除了TPOT附带的默认配置之外，我们还允许用户为TPOT提供 operator 和参数的自定义配置。
 
@@ -348,7 +348,7 @@ tpot data/mnist.csv -is , -target class -config tpot_classifier_config.py -g 5 -
 
 
 
-####  TPOT 中的 Template 设置
+###  TPOT 中的 Template 设置
 
 模板选项提供了一种为机器学习 Pipeline 指定所需结构的方法，这可以减少TPOT计算时间，并提供更多可解释的结果。当前实现只支持线性Pipeline 。
 
@@ -362,7 +362,7 @@ tpot_obj = TPOTClassifier(
 
 如果在Pipeline的第一步中首选特定运算符（如SelectPercentile），则可以将模板定义为“SelectPercentile Transformer Classifier”。
 
-#### TPOT中的FeatureSetSelector
+### TPOT中的FeatureSetSelector
 
 FeatureSetSelector是TPOT中一种特殊的新型算子。该算子实现了基于先验专家知识的特征选择。例如，在RNA-seq基因表达分析中，该算子可以通过上面的模板选项，在Pipeline的第一步选择一个或多个基于GO（基因本体）术语的基因（特征）集或带注释的基因集分子签名数据库（MSigDB），以减少维数和TPOT计算时间。
 
@@ -392,7 +392,7 @@ tpot = TPOTClassifier(generations=5,
 tpot.fit(test_X, test_y)
 ```
 
-#### TPOT中的 Pipeline 缓存
+### TPOT中的 Pipeline 缓存
 
 使用memory参数，Pipeline 可以在拟合模型后缓存每个 transformer 的结果。在优化过程中，如果Pipeline中的参数和输入数据与另一个拟合Pipeline相同，则可以避免重复计算。TPOT允许用户指定自定义目录路径或[`joblib.Memory`](https://joblib.readthedocs.io/en/latest/generated/joblib.Memory.html) 以防在将来的TPOT运行（或热启动运行）中重用内存缓存。
 
@@ -421,7 +421,7 @@ rmtree(cachedir)
 
 注意：如果用户设置了自定义目录路径或内存对象，TPOT不会清理内存缓存。我们建议您在不需要时清理内存缓存。
 
-#### OSX或Linux下n_jobs>1时的崩溃/冻结问题
+### OSX或Linux下n_jobs>1时的崩溃/冻结问题
 
 在内部，TPOT使用joblib并行地拟合估计量。scikit-learn也是使用相同的并行化框架。但在OSX或Linux下，当n_jobs>1时，它可能会崩溃/冻结，就像scikit learn所做的那样，尤其是对于大型数据集。
 
@@ -440,17 +440,9 @@ if __name__ == '__main__':
 
 
 
-####  TPOT缺点
-
-用过grid-search的同学一定知道，在参数非常多的情况下，是相当耗时的，由此我们可以看出TPOT问题——**耗时**。
-
-以下给出解释：
-搜索整个Pipeline空间是特别耗时的。认识到原因是必要的，在默认的TPOT参数下（100 generations with 100 population size），TPOT将在完成前评估1万个Pipeline配置。考虑一个网格搜索1万个超参数组合用于机器学习算法以及网格搜索需要多长时间。用10倍的交叉验证来评估这1万个模型，这意味着大约有10万个模型在一个网格搜索的训练数据中被匹配和评估。这是一个耗时的过程，即使对于像决策树这样的简单模型也是如此。
-典型的TPOT运行将需要数小时到数天才能完成（除非是一个小数据集），但是可以中断运行，并看到目前为止最好的结果。TPOT还提供warm_start参数，可以从中断的地方重新启动之前运行的TPOT。
-
-也许 TPOT 最好的特性是它将模型导出为 Python 代码文件，后续可以使用它。具体文档和教程示例参见以下两个链接：
+### 相关链接
 
 TPOT 文档地址：https://epistasislab.github.io/tpot/。
 
- TPOT 的教程示例地址：https://epistasislab.github.io/tpot/examples/
+TPOT 的教程示例地址：https://epistasislab.github.io/tpot/examples/
 
