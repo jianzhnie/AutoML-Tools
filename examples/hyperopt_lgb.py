@@ -4,8 +4,8 @@ from hyperopt import hp
 from hyperopt import tpe
 from hyperopt import Trials
 from hyperopt import fmin
-
 import csv
+
 
 
 N_FOLDS = 10
