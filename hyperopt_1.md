@@ -244,7 +244,7 @@ ax.set_ylabel('cross validation accuracy', fontsize=12)
 k大于63后，精度会急剧下降。 这是由于数据集中每个类只有50个实例。 因此，让我们通过将“ n_neighbors”的值限制为较小的值来进行深入研究。
 
 ```python
-rom sklearn import datasets
+from sklearn import datasets
 iris = datasets.load_iris()
 X = iris.data
 y = iris.target

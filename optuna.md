@@ -76,8 +76,9 @@ Out:
 First, create a shared study using `optuna create-study` command (or using [`optuna.create_study()`](https://optuna.readthedocs.io/en/stable/reference/generated/optuna.create_study.html#optuna.create_study) in a Python script).
 
 ```python
-$ optuna create-study --study-name "distributed-example" --storage "sqlite:///example.db"
-[I 2020-07-21 13:43:39,642] A new study created with name: distributed-example
+$ optuna create-study --study-name "distributed-example" --storage "sqlite:///example.db"          
+
+[I 2020-11-09 23:46:20,540] A new study created in RDB with name: di6:20,540] A new study created in RDB with name: distributed-example
 ```
 
 Then, write an optimization script. Let’s assume that `foo.py` contains the following code.

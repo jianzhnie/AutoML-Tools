@@ -17,3 +17,6 @@ if hasattr(exported_pipeline, 'random_state'):
 
 exported_pipeline.fit(training_features, training_target)
 results = exported_pipeline.predict(testing_features)
+
+
+

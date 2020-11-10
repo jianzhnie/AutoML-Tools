@@ -204,6 +204,7 @@ print("Accuracy score:", sklearn.metrics.accuracy_score(y_test, predictions))
 ```
 
 #### 关键参数
+
  Auto-sklearn支持的参数较多，以分类器为例，参数及其默认值如下图所示：
 ```python
 AutoSklearnClassifier(dask_client=None,
