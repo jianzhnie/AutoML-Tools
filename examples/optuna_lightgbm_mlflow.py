@@ -55,6 +55,11 @@ def mlflow_callback(study, trial):
 if __name__ == "__main__":
     study = optuna.create_study(direction="maximize")
     study.optimize(objective, n_trials=100, timeout=600, callbacks=[mlflow_callback])
+    importances = optuna.importance.get_param_importances(study)
+    print("importances")
+    print(importances)
+    fig = optuna.visualization.plot_param_importances(study)
+    fig.show()
 
     print("Number of finished trials: {}".format(len(study.trials)))
 

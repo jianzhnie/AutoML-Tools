@@ -7,8 +7,106 @@
 Optuna 有如下现代化的功能：
 
 - [轻量级、多功能和跨平台架构](https://tigeraus.gitee.io/doc-optuna-chinese-build/tutorial/first.html)
+
 - [并行的分布式优化](https://tigeraus.gitee.io/doc-optuna-chinese-build/tutorial/distributed.html)
+
 - [对不理想实验 (trial) 的剪枝 (pruning)](https://tigeraus.gitee.io/doc-optuna-chinese-build/tutorial/pruning.html)
+
+- 超参数重要性
+
+- 集成新的 CMA-ES 采样
+
+- 集成 MLflow
+
+  
+
+### 超参数重要性
+
+虽然 Optuna 的设计可以处理任意多的超参数，但通常情况下，我们建议保持尽量少的参数个数，以减少搜索空间的维度。因为实际上，在许多情况下，只有很少的参数在确定模型的整体性能中起主导作用。而从 2.0 版开始，我们 引入了一个新模块 optuna.importance. 该模块可以评估每个超参数对整体性能的重要性，`optuna.importances.get_param_importances`. 该函数接受一个 study 作为参数，返回一个字典，该字典将不同的超参数映射到其各自的重要性数值上，这个数值的浮动范围为 0.0 到 1.0, 值越高则越重要。同时，你也可以通过修改 evaluator 参数来尝试不同的超参数重要性评估算法，其中包括 fANOVA，这是一种基于随机森林的复杂算法。由于各种算法对重要性的评估方式不同，因此我们计划在以后的发行版中增加可选算法的数量。
+
+```text
+study.optimize(...)
+importances = optuna.importance.get_param_importances(study)
+
+Specify which algorithm to use.
+
+importances.optuna.importance.get_param_importances(
+   study, evaluator=optuna.importance.FanovaImportanceEvaluator()
+)
+```
+
+你不用自己处理这些重要性数据，Optuna  已经提供了同 `optuna.importance.get_param_importances` 具有相同接口的函数 `optuna.visualization.plot_param_importances`。它将返回一个 Plotly 图表，这对于可视化分析很有帮助。
+
+```text
+fig = optuna.visualization.plot_param_importances(study)
+fig.show()
+```
+
+下面是一幅使用 PyTorch 编写的神经网络绘制的重要性图。从中可以看出，学习率 “ lr” 占主导地位。
+
+![img](https://pic2.zhimg.com/v2-2e5c25ac6b1f44c6f978d13e22451a61_b.jpg)
+通过 mean decrease impurity 得出的超参数重要性。图中横柱的不同颜色是用于区分参数类型的，包括整数，浮点数和类别参数。
+
+### Hyperband Pruning
+
+剪枝 (Pruning) 对于优化需要计算的目标函数至关重要。它使你可以在早期阶段有效地发现和停止无意义的试验，以节省计算资源，从而在更短的时间内找到最佳的优化方案。这也是在深度学习，这个Optuna的主要应用场景下我们经常碰到的情况。 
+
+比如，你可能需要训练由数百万个参数组成的神经网络，它们通常需要数小时或数天的处理时间。 Hyperband 是一种剪枝算法，它是建立在之前的逐次减半算法（SuccessiveHalvingPruner）基础上。逐次减半可以显着减少每次试验所需时间，但是众所周知，它对配置方式很敏感，而 Hyperband 解决了这个问题。该问题有很多种解决办法，而 Optuna 选择了启发式算法以进一步降低对用户的配置方式要求，使无相关技术背景的用户也能很容易使用。它最初在1.1版中作为实验性特性被引入，不过现在在接口和性能方面都已稳定。实验表明，在通用基准测试中，它的表现远强于其他的 pruner, 包括中位数 pruner (MedianPruner) ( Optuna 中的默认 pruner)。这一点你可以从下文的基准测试结果中看出。
+
+```text
+study = optuna.create_study(
+  pruner=optuna.pruners.HyperbandPruner(max_resource=”auto”)
+)
+study.optimize(...)
+```
+
+![img](https://pic4.zhimg.com/v2-7d152619e05ba135b14a81f9378eef2b_b.jpg)
+比起之前的包括中位数 pruner (`tpe-median`) 在内的 pruner，Hyperband (`tpe-hyperband`) 不仅收敛更快，而且在多次运行中更稳定（见阴影区域的variance）。图中 1 budget 对应 100 个 training epochs. `tpe-nop` 代表无剪枝。
+
+### 新的 CMA-ES 采样
+
+`optuna.samplers.CmaEsSampler` 是新的CMA-ES采样器。 它比以前的  `optuna.integration` 子模块下的 CMA-ES 采样器要快。 这种新的采样器可以处理大量的试验，因此应适用于更广泛的问题。 此外，尽管以前的CMA-ES采样器过去一直不考虑被剪枝试验的优化，但该采样器还具有实验功能，可以在优化过程中更有效地利用修剪试验获得的信息。
+
+过去你可能这么创建一个 study：
+
+```text
+study = optuna.create_study(sampler=optuna.integration.CmaEsSampler())
+```
+
+现在你可以用新的子模块来这么做了：
+
+```text
+study = optuna.create_study(sampler=optuna.samplers.CmaEsSampler())
+```
+
+或者，如果你要用原来的模块的话，它现在改了个名字：
+
+```text
+study = optuna.create_study(sampler=optuna.integration.PyCmaSampler())
+```
+
+![img](https://pic3.zhimg.com/v2-80d9c6e0866f9c1fa17c97babde25caa_b.jpg)
+在优化过程中考虑被剪枝的试验的情况下，新的 CMA-ES 收敛速度更快。
+
+### 与第三方框架的集成 (Integration)
+
+Optuna带有各种子模块，可与各种第三方框架集成。 其中包括 LightGBM 和 XGBoost 等梯度增强框架，各种 PyTorch 和 TensorFlow 生态系统内的深度学习框架，以及许多其他框架。 在下文中，我们将介绍其中最重要的一些与此版本紧密相关的集成。
+
+#### LightGBM
+
+LightGBM是一个完善的、用于梯度增强的 Python 框架。 Optuna 提供了各种与 LightGBM 紧密集成的集成模块。 其中，“optuna.integration.lightgbm.train” 提供了对超参数的高效逐步调整，可用于直接取代 “ lightgbm.train”，因而用户无需修改代码。
+
+而为了与其他Optuna组件进行交叉验证和集成，例如记录优化历史记录和分布式部署的研究，Optuna还提供了`optuna.integration.lightgbm.LightGBMTuner`和`optuna.integration.lightgbm.LightGBMTunerCV
+
+#### MLflow
+
+MLflow 是一个流行的、用于管理机器学习流水线和生命周期的框架。 而 MLflow Tracking 是一个通过交互式 GUI 监视实验的特别有用的工具。而现在，由于 MLflowCallback 的存在，使用 MLflow Tracking 来跟踪 Optuna 中的 HPO 实验变得非常简单，只要向 Optuna 的优化过程中注册一个回调函数即可。 
+
+#### Redis
+
+优化算法和优化历史记录在 Optuna 的体系结构中是明确分开的。Storage 抽象了优化历史记录到各种后端（例如 RDB 或内存中）的储存过程。 RDB 可用于分布式优化或持久化保存历史记录，而内存中的存储则适用于不需要分布式优化或者持久记录的快速实验。 Redis 作为一种内存中的键-值存储，由于其灵活性和高性能而常被用于缓存。在本版本中，我们实验性地新增了一个 Redis 存储，在现有的 RDB 和内存存储之间建立了一个折中选项。 Redis 存储易于设置，可作为无法配置 RDS 的用户的备选项。
+
+
 
 ### **使用数据库存储搜索过程**
 
@@ -503,12 +601,13 @@ if __name__ == "__main__":
 
 这里就是一些optuna的调用代码。
 
-## 自己使用optuna的思路
+## 使用optuna的思路
 
 1）sample个靠谱的子数据集；
 
-2）大概写个objective函数的训练和测试代码，objective函数返回一个需要优化的metric；
+2）写个objective函数的训练和测试代码，objective函数返回一个需要优化的metric；
 
 3）把要优化的变量定义成optuna的parameter（通过trial.suggest_xxx)；
 
 4）copy个main部分代码，开始搜超参；
+
