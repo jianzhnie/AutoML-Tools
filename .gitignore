@@ -104,12 +104,9 @@ venv.bak/
 .mypy_cache/
 
 archive/
-SanP500/
-data/
 .vscode
 .idea
 .DS_Store
-*.csv
 *.ipynb_checkpoints
 
 # custom
