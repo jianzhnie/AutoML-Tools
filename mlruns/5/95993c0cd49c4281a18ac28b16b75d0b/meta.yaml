@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/AutoML-Tools/mlruns/5/95993c0cd49c4281a18ac28b16b75d0b/artifacts
+end_time: 1605060941133
+entry_point_name: ''
+experiment_id: '5'
+lifecycle_stage: active
+name: ''
+run_id: 95993c0cd49c4281a18ac28b16b75d0b
+run_uuid: 95993c0cd49c4281a18ac28b16b75d0b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1605060941043
+status: 3
+tags: []
+user_id: jianzh

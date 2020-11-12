@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/mlflow-example/mlruns/1/b397cdf0e95043358004a0831f5e1e9f/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: deleted
+name: ''
+run_id: b397cdf0e95043358004a0831f5e1e9f
+run_uuid: b397cdf0e95043358004a0831f5e1e9f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1602665566011
+status: 1
+tags: []
+user_id: jianzh

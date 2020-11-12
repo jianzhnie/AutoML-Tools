@@ -1,0 +1,15 @@
+artifact_uri: ./mlruns/0/74ac7596720648ff9f5da7fc2438ec96/artifacts
+end_time: 1605002037093
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: 74ac7596720648ff9f5da7fc2438ec96
+run_uuid: 74ac7596720648ff9f5da7fc2438ec96
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1605002037033
+status: 3
+tags: []
+user_id: jianzh

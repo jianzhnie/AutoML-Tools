@@ -1,0 +1,4 @@
+artifact_location: file:///D:/mlflow-example/mlruns/3
+experiment_id: '3'
+lifecycle_stage: active
+name: sklearn_elasticnet_wine
