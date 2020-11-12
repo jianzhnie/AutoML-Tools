@@ -1,0 +1,20 @@
+artifact_path: best_estimator
+flavors:
+  python_function:
+    env: conda.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    python_version: 3.7.6
+  sklearn:
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 0.22.1
+run_id: c9530ccc78504ea6814dd225759c2b38
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  type: dataframe
+signature:
+  inputs: '[{"type": "double"}, {"type": "double"}, {"type": "double"}, {"type": "double"}]'
+  outputs: '[{"type": "integer"}]'
+utc_time_created: '2020-10-14 09:01:06.761922'
