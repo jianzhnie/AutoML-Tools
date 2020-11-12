@@ -33,7 +33,7 @@ def train_breast_cancer(config):
 
 if __name__ == "__main__":
     client = MlflowClient()
-    experiment_id = client.create_experiment("ray.tune_xgb")
+    experiment_id = client.create_experiment("ray.tune_xgb_mlflow")
     config = {
         "logger_config": {
             "mlflow_experiment_id": experiment_id,
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     }
     analysis = tune.run(
         train_breast_cancer,
-        name="mlflow",
+        name="ray.tune_xbg_mlflow",
         resources_per_trial={"cpu": 1},
         config=config,
         loggers=DEFAULT_LOGGERS + (MLFLowLogger, ),
