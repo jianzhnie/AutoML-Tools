@@ -114,6 +114,7 @@ archive/
 *.pkl.json
 *.log.json
 work_dirs/
+ray_results/
 
 # Pytorch
 *.pth

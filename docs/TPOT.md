@@ -1,20 +1,18 @@
+#! https://zhuanlan.zhihu.com/p/290865329
 ## TPOT
 
 [TOC]
 
+
 TPOT是一个自动化的机器学习库，利用遗传算法进行自动化的特征选择和模型选择。
 
-![img](http://image.techweb.com.cn/upload/roll/2020/09/27/202009279899_8178.png)
+![An example machine learning pipeline](https://raw.githubusercontent.com/EpistasisLab/tpot/master/images/tpot-ml-pipeline.png)
 
-图源：《Evaluation of a Tree-based Pipeline Optimization Tool for Automating Data Science》 。
-
-
+图源：《Evaluation of a Tree-based Pipeline Optimization Tool for Automating Data Science》 
 
 由上图可知，TPOT可以自动实现阴影部分的工作，包含**特征选择、特征预处理、特征构建、同时还可以进行模型选择和参数调优。**，TPOT将智能地探索数千个可能的pipeline和超参数组合为数据集找到最好的pipeline，完成搜索之后，它会为您生成最佳的完整的机器学习Python代码，以便后续修改pipeline。
 
-
-
-![img](http://image.techweb.com.cn/upload/roll/2020/09/27/20200927210_9948.png)
+![An example TPOT pipeline](https://raw.githubusercontent.com/EpistasisLab/tpot/master/images/tpot-pipeline-example.png)
 
 TPOT是建立在scikit-learn之上的，因此它生成的所有代码都应该看起来很熟悉……
 
