@@ -1,4 +1,0 @@
-artifact_location: file:///D:/AutoML-Tools/mlruns/7
-experiment_id: '7'
-lifecycle_stage: active
-name: breast_cancer_xgboost_cv
