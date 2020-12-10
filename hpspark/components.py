@@ -158,7 +158,7 @@ def _trees_hp_space(
 def random_forest(name, criterion=None, **kwargs):
     '''
     Return a pyll graph with hyperparamters that will construct
-    a sklearn.ensemble.RandomForestClassifier model.
+    a RandomForestClassifier model.
 
     Args:
         criterion([str]): choose 'gini' or 'entropy'.
@@ -207,7 +207,7 @@ def _grad_boosting_hp_space(
 def gradient_boosting(name, loss=None, **kwargs):
     '''
     Return a pyll graph with hyperparamters that will construct
-    a sklearn.ensemble.GradientBoostingClassifier model.
+    a GradientBoostingClassifier model.
 
     Args:
         loss([str]): choose from ['deviance', 'exponential']
@@ -250,7 +250,7 @@ def _decision_tree_hp_space(
 def decision_tree(name, loss=None, **kwargs):
     '''
     Return a pyll graph with hyperparamters that will construct
-    a sklearn.ensemble.GradientBoostingClassifier model.
+    a  Decision tree model.
 
     Args:
         loss([str]): choose from ['deviance', 'exponential']
