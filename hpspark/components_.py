@@ -6,6 +6,7 @@ from pyspark.ml.classification import GBTClassifier
 
 from functools import partial
 from hyperopt.pyll import scope, as_apply
+from hyperopt.pyll.stochastic import sample
 from hyperopt import hp
 
 
@@ -270,9 +271,19 @@ def decision_tree(name, loss=None, **kwargs):
 ##==== Various classifier/regressor selectors ====##
 ####################################################
 def any_classifier(name):
+    '''
+    Return classiffiers have supported
+    '''
     classifiers = [
         decision_tree(name + '.decision_tree'),
         random_forest(name + '.random_forest'),
         gradient_boosting(name + '.grad_boosting', loss='deviance'),
     ]
     return hp.choice('%s' % name, classifiers)
+
+
+if __name__ == "__main__":
+    clf = decision_tree("spark")
+    clf = decision_tree("spark")
+    print(clf)
+    print(type(clf))

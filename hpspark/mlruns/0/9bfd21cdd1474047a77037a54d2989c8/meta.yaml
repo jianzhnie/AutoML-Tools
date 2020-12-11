@@ -1,0 +1,15 @@
+artifact_uri: file:///home/robin/jianzh/automl/AutoML-Tools/hpspark/mlruns/0/9bfd21cdd1474047a77037a54d2989c8/artifacts
+end_time: 1607691426662
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: 9bfd21cdd1474047a77037a54d2989c8
+run_uuid: 9bfd21cdd1474047a77037a54d2989c8
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1607691423519
+status: 4
+tags: []
+user_id: robin

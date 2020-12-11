@@ -2007,3 +2007,8 @@ def generic_space(name='space'):
     return as_apply({'model': model})
 
 # -- flake8 eof
+
+
+if __name__ == "__main__":
+    clf = decision_tree("spark")
+    print(clf)
