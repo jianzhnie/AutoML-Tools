@@ -1,0 +1,1 @@
+{'classifier_type': 2, 'grad_boosting.maxDepth': 3, 'grad_boosting.minInstancesPerNode': 1, 'grad_boosting.minInstancesPerNode.gt1': 8.0, 'grad_boosting.subsamplingRate': 0, 'learning_rate': 0.19791596304323633}
