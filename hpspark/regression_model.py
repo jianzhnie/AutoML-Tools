@@ -112,7 +112,7 @@ if __name__ == "__main__":
         best_hyperparameters = fmin(fn=fmin_objective,
                                     space=reg_space,
                                     algo=algo,
-                                    max_evals=10,
+                                    max_evals=100,
                                     trials=bayes_trials,
                                     max_queue_len=10,
                                     timeout=6000)

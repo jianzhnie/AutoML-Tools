@@ -115,6 +115,7 @@ archive/
 *.log.json
 work_dirs/
 ray_results/
+hpspark/mlruns/
 
 # Pytorch
 *.pth

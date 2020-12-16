@@ -48,7 +48,6 @@ def RegObjective(params, trainData, testData, evaluator, labelCol="label", featu
     """
     with mlflow.start_run(nested=True):
         mlflow.log_params(params)
-        print(params)
         model_type = params['type']
         del params['type']
         if model_type == 'linear_regression':
