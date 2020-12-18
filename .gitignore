@@ -116,7 +116,7 @@ archive/
 work_dirs/
 ray_results/
 hpspark/mlruns/
-
+data/
 # Pytorch
 *.pth
 *.py~
